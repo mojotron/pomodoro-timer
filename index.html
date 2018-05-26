@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Pomodoro Timer</title>
+	<meta charset="utf-8" />
+	<link href="styles/reset.css" type="text/css" rel="stylesheet" />
+	<link href="styles/main.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+
+	<div id="container">
+
+		<div id="header">
+			<h1>Pomodoro Timer</h1>
+		</div>
+
+		<div id="timer-setup">
+
+			<div class="timer-setup">
+				<button class="add-minute">+</button>
+				<span id="pomodoro-time"></span>
+				<button class="subtract-minute">-</button>
+			</div>
+
+			<div class="timer-setup">
+				<button class="add-minute">+</button>
+				<span id="break-time"></span>
+				<button class="subtract-minute">-</button>
+			</div>
+
+		</div>
+
+		<div id="timer-display">
+			<span id="time-countdown"></span>
+			<div id="timer-controls">
+				<button>start</button>
+				<button>pouse</button>
+				<button>stop</button>
+				<button>reset</button>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		var defaultPomodoro = 25;
+		var defaultBreak = 5;
+
+		var timeCountown = document.querySelector('#time-countdown');
+		timeCountown.textContent = defaultPomodoro;
+
+		//set up custom session
+		var customPomodoro = document.querySelector('#pomodoro-time');
+		customPomodoro.textContent = defaultPomodoro;
+		var customBreak = document.querySelector('#break-time');
+		customBreak.textContent = defaultBreak;
+
+
+
+	</script>
+</body>
+</html>
