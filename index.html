@@ -17,15 +17,15 @@
 		<div id="timer-setup">
 
 			<div class="timer-setup">
-				<button class="add-minute">+</button>
+				<button class="change-minute pomodoro">+</button>
 				<span id="pomodoro-time"></span>
-				<button class="subtract-minute">-</button>
+				<button class="change-minute pomodoro">-</button>
 			</div>
 
 			<div class="timer-setup">
-				<button class="add-minute">+</button>
+				<button class="change-minute break">+</button>
 				<span id="break-time"></span>
-				<button class="subtract-minute">-</button>
+				<button class="change-minute break">-</button>
 			</div>
 
 		</div>
@@ -44,15 +44,40 @@
 	<script type="text/javascript">
 		var defaultPomodoro = 25;
 		var defaultBreak = 5;
-
 		var timeCountown = document.querySelector('#time-countdown');
-		timeCountown.textContent = defaultPomodoro;
+		timeCountown.textContent = defaultPomodoro + ':00';
 
-		//set up custom session
+		// Set up custom session
 		var customPomodoro = document.querySelector('#pomodoro-time');
-		customPomodoro.textContent = defaultPomodoro;
+		customPomodoro.textContent = defaultPomodoro + ':00';
 		var customBreak = document.querySelector('#break-time');
-		customBreak.textContent = defaultBreak;
+		customBreak.textContent = defaultBreak + ':00';
+		// Adding/substracting minutes to default pomodoro/break
+		var changeMinuteBtns = document.querySelectorAll('.change-minute');
+		changeMinuteBtns.forEach((button) => {
+			button.addEventListener('click', (e) => {
+				// Don't wanna negative time
+				if(defaultPomodoro <= 0 || defaultBreak <= 0){
+					if(button.textContent === '-'){
+						return;
+					}
+				}
+				// Accessing buttuns in node list with position index
+				if(button === changeMinuteBtns[0]){
+					defaultPomodoro += 1;
+				}else if(button === changeMinuteBtns[1]){
+					defaultPomodoro -= 1;
+				}else if(button === changeMinuteBtns[2]){
+					defaultBreak += 1;
+				}else{
+					defaultBreak -=1;
+				}
+				// Displaying new values
+				customPomodoro.textContent = defaultPomodoro + ':00';
+				customBreak.textContent = defaultBreak + ':00';
+				timeCountown.textContent = defaultPomodoro + ':00';
+			});
+		});
 
 
 
