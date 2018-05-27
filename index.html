@@ -79,7 +79,26 @@
 			});
 		});
 
+	//CountDown 
+	function setUpTimer(){
+		var currentTime = Date.parse(new Date());
+		var deadline = new Date(currentTime + defaultPomodoro*60*1000);
+		return deadline;
+	}
+	
+	function countDown(){
+		var deadline = setUpTimer();
+		var timerTime = Date.parse(deadline) - Date.parse(new Date());
+		var minutes = Math.floor((timerTime / (1000 * 60)) % 60);
+		var seconds = Math.floor((timerTime / 1000) % 60);
+		var hours = Math.floor((timerTime / (1000 * 60 * 60)) % 24);
 
+		console.log(minutes + ':' + seconds);
+	}
+
+	function startTimer(){
+		
+	}
 
 	</script>
 </body>
