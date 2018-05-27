@@ -33,7 +33,7 @@
 		<div id="timer-display">
 			<span id="time-countdown"></span>
 			<div id="timer-controls">
-				<button>start</button>
+				<button id="start-control">start</button>
 				<button>pouse</button>
 				<button>stop</button>
 				<button>reset</button>
@@ -62,6 +62,20 @@
 						return;
 					}
 				}
+				// Don't wanna over 60 min, pomodoro is for high focus work
+				if(defaultPomodoro >= 60){
+					if(button.textContent === '+'){
+						alert('High focus work over 60 minuts it is not productive!');
+						return;
+					}
+				}
+				// Don't wanna break session over 20 minutes
+				if(defaultBreak >= 20){
+					if(button.textContent === '+'){
+						alert('To much break time, focus on your work!!!');
+						return;
+					}
+				}
 				// Accessing buttuns in node list with position index
 				if(button === changeMinuteBtns[0]){
 					defaultPomodoro += 1;
@@ -79,26 +93,24 @@
 			});
 		});
 
-	//CountDown 
-	function setUpTimer(){
+	var startBtn = document.querySelector('#start-control');
+	startBtn.addEventListener('click', () => {
 		var currentTime = Date.parse(new Date());
 		var deadline = new Date(currentTime + defaultPomodoro*60*1000);
-		return deadline;
-	}
+		countDown(deadline);
+	})
+	//CountDown 
 	
-	function countDown(){
-		var deadline = setUpTimer();
+	
+	function countDown(deadline){
 		var timerTime = Date.parse(deadline) - Date.parse(new Date());
 		var minutes = Math.floor((timerTime / (1000 * 60)) % 60);
 		var seconds = Math.floor((timerTime / 1000) % 60);
 		var hours = Math.floor((timerTime / (1000 * 60 * 60)) % 24);
-
 		console.log(minutes + ':' + seconds);
 	}
 
-	function startTimer(){
-		
-	}
+	
 
 	</script>
 </body>
