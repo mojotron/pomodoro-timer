@@ -20,12 +20,16 @@ body, button {
 button, span {
   font-size: 1.2rem;
 }
+button:hover {
+  cursor: pointer;
+}
 
-h1 {
+h1, h1 span {
   
   font-size: 4rem;
   text-transform: uppercase;
 }
+
 
 p {
   font-size: 1.5rem;
@@ -42,6 +46,6 @@ p {
   display: inline-block;
 }
 
-#time-countdown {
+#display-time {
   font-size: 3rem;
 }
