@@ -1,70 +1,98 @@
-var defaultPomodoroTime = 25;
-var defaultBreakTime = 5;
+let session = 25;
+let breakSession = 5;
+let timeNow;
+let timerTime;
+let intervalCount = 0;
 
-var currentInterval;
+// functions
+function setTime(input){
+	timeNow = Date.parse(new Date());
+	timerTime = new Date(timeNow + input * 60 * 1000);
+}
 
-var currentTime;
-var countdownTime;
+function formatTime(inputTime){
+	var time = Date.parse(inputTime) - Date.parse(new Date());
+	var minutes = Math.floor((time / (1000 * 60)) % 60);
+	var seconds = Math.floor((time / 1000) % 60);
+	return {
+		'time': time,
+		'minutes': minutes,
+		'seconds': seconds,
+	}
+}
 
-var pauseFlag = false;
-var timeLeft;
+function timer(element, inputTime){
+	let interval = setInterval(function(){
+		let format = formatTime(inputTime);
+		element.textContent = ((format.minutes < 10)? '0' + format.minutes : format.minutes) +
+			':' + ((format.seconds < 10)? '0' + format.seconds : format.seconds);
+		if(formatTime(inputTime).time <= 0){
+			clearInterval(interval);
+			intervalCount += 1;
+			if(intervalCount < 4){
+				if(intervalCount % 2 !== 0){
+					setTime(breakSession);
+					timer(displayTimer, timerTime);
+				}else{
+					setTime(session);
+					timer(displayTimer, timerTime);
+				}
+			}
+		}
+	}, 1000);
+}
 
-var pomodoroOrBreak = false;
-////////////////////////////////////////////////////////////////////////////////////
-var displayTimer = document.querySelector('#display-time');
-displayTimer.textContent = defaultPomodoroTime + ':00';
-// Start button
-var startBtn = document.querySelector('#start-control');
+function setAndStrat(session){
+	setTime(session);
+	timer(displayTimer, timerTime);
+}
+// Select Nodes
+let pomodoroTime = document.getElementById('pomodoro-time');
+let breakTime = document.getElementById('break-time');
+let displayTimer = document.getElementById('display-time');
+
+let startBtn = document.getElementById('start-control');
+// Nodes modifiaers
+pomodoroTime.textContent = ((session < 0) ? '0' + session : session) + ':00';
+breakTime.textContent = ((breakSession < 0) ? '0' + breakSession : breakSession) + ':00';
+displayTimer.textContent = ((session < 0) ? '0' + session : session) + ':00';
+
 startBtn.addEventListener('click', () => {
-	setTime(defaultPomodoroTime);
-	startTimer(displayTimer,countdownTime);
+	setAndStrat(session);
 });
-// Pause button
-var pauseBtn = document.querySelector('#pause-control');
-pauseBtn.addEventListener('click', () => {
-	pauseTimer();
-});
-// Stop button
-var stopBtn = document.querySelector('#stop-control');
-stopBtn.addEventListener('click', () => {
-	stopTimer();
-});
-//reset button
-var resetBtn = document.querySelector('#reset-control');
-resetBtn.addEventListener('click', () => {
-	resetTimer();
-});
+
+
+
+
+
+
 
 // Set up custom session buttons
-var customPomodoro = document.querySelector('#pomodoro-time');
-customPomodoro.textContent = defaultPomodoroTime + ':00';
-var customBreak = document.querySelector('#break-time');
-customBreak.textContent = defaultBreakTime + ':00';
 // Adding/substracting minutes to default pomodoro/break
 var changeMinuteBtns = document.querySelectorAll('.change-minute');
 changeMinuteBtns.forEach((button) => {
 	button.addEventListener('click', (e) => {
 	// Don't wanna over 60 min, pomodoro is for high focus work
-	if(defaultPomodoroTime >= 60){
+	if(session >= 60){
 		if(button === changeMinuteBtns[0]){
 			alert('High focus work over 60 minuts it is not productive!');
 			return;
 		}
 	}
-	if(defaultPomodoroTime <= 1){
+	if(session <= 1){
 		if(button === changeMinuteBtns[1]){
 			alert('Nice try!')
 			return;
 		}
 	}
 	// Don't wanna break session over 25 minutes
-	if(defaultBreakTime >= 25){
+	if(breakSession >= 25){
 		if(button === changeMinuteBtns[2]){
 			alert('To much break time, focus on your work!!!');
 			return;
 		}
 	}
-	if(defaultBreakTime <= 1){
+	if(breakSession <= 1){
 		if(button === changeMinuteBtns[3]){
 			alert('Nice try!')
 			return;
@@ -72,17 +100,17 @@ changeMinuteBtns.forEach((button) => {
 	}
 	// Accessing buttuns in node list with position index
 	if(button === changeMinuteBtns[0]){
-		defaultPomodoroTime += 1;
+		session += 1;
 	}else if(button === changeMinuteBtns[1]){
-		defaultPomodoroTime -= 1;
+		session -= 1;
 	}else if(button === changeMinuteBtns[2]){
-		defaultBreakTime += 1;
+		breakSession += 1;
 	}else{
-		defaultBreakTime -=1;
+		breakSession -=1;
 	}
 	// Displaying new values
-	customPomodoro.textContent = defaultPomodoroTime + ':00';
-	customBreak.textContent = defaultBreakTime + ':00';
-	displayTimer.textContent = defaultPomodoroTime + ':00';
+	pomodoroTime.textContent = ((session < 0) ? '0' + session : session) + ':00';
+	breakTime.textContent = ((breakSession < 0) ? '0' + breakSession : breakSession) + ':00';
+	displayTimer.textContent = ((session < 0) ? '0' + session : session) + ':00';
 	});
 });
