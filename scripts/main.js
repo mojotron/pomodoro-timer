@@ -3,6 +3,8 @@ let breakSession = 5;
 let timeNow;
 let timerTime;
 let intervalCount = 0;
+let interval;
+
 
 // functions
 function setTime(input){
@@ -11,9 +13,9 @@ function setTime(input){
 }
 
 function formatTime(inputTime){
-	var time = Date.parse(inputTime) - Date.parse(new Date());
-	var minutes = Math.floor((time / (1000 * 60)) % 60);
-	var seconds = Math.floor((time / 1000) % 60);
+	let time = Date.parse(inputTime) - Date.parse(new Date());
+	let minutes = Math.floor((time / (1000 * 60)) % 60);
+	let seconds = Math.floor((time / 1000) % 60);
 	return {
 		'time': time,
 		'minutes': minutes,
@@ -22,7 +24,7 @@ function formatTime(inputTime){
 }
 
 function timer(element, inputTime){
-	let interval = setInterval(function(){
+	interval = setInterval(function(){
 		let format = formatTime(inputTime);
 		element.textContent = ((format.minutes < 10)? '0' + format.minutes : format.minutes) +
 			':' + ((format.seconds < 10)? '0' + format.seconds : format.seconds);
@@ -46,30 +48,49 @@ function setAndStrat(session){
 	setTime(session);
 	timer(displayTimer, timerTime);
 }
+
+function displayTimes(){
+	pomodoroTime.textContent = ((session < 0) ? '0' + session : session) + ':00';
+	breakTime.textContent = ((breakSession < 0) ? '0' + breakSession : breakSession) + ':00';
+	displayTimer.textContent = ((session < 0) ? '0' + session : session) + ':00';
+}
+
+function stopAndClear(){
+	clearInterval(interval)
+	intervalCount = 0;
+	displayTimes()
+}
 // Select Nodes
 let pomodoroTime = document.getElementById('pomodoro-time');
 let breakTime = document.getElementById('break-time');
 let displayTimer = document.getElementById('display-time');
-
+displayTimes()
+// Select Button Nodes
 let startBtn = document.getElementById('start-control');
-// Nodes modifiaers
-pomodoroTime.textContent = ((session < 0) ? '0' + session : session) + ':00';
-breakTime.textContent = ((breakSession < 0) ? '0' + breakSession : breakSession) + ':00';
-displayTimer.textContent = ((session < 0) ? '0' + session : session) + ':00';
-
+let pauseBtn = document.getElementById('pause-control');;
+let stopBtn = document.getElementById('stop-control');;
+let resetBtn = document.getElementById('reset-control');;
+let changeMinuteBtns = document.querySelectorAll('.change-minute');
+// Fire up buttons
 startBtn.addEventListener('click', () => {
 	setAndStrat(session);
 });
 
+pauseBtn.addEventListener('click', () => {
+	alert('Hello!')
+});
 
+stopBtn.addEventListener('click', () => {
+	stopAndClear();
+});
 
+resetBtn.addEventListener('click', () => {
+	session = 25;
+	breakSession = 5;
+	stopAndClear();	
+});
 
-
-
-
-// Set up custom session buttons
 // Adding/substracting minutes to default pomodoro/break
-var changeMinuteBtns = document.querySelectorAll('.change-minute');
 changeMinuteBtns.forEach((button) => {
 	button.addEventListener('click', (e) => {
 	// Don't wanna over 60 min, pomodoro is for high focus work
@@ -109,8 +130,6 @@ changeMinuteBtns.forEach((button) => {
 		breakSession -=1;
 	}
 	// Displaying new values
-	pomodoroTime.textContent = ((session < 0) ? '0' + session : session) + ':00';
-	breakTime.textContent = ((breakSession < 0) ? '0' + breakSession : breakSession) + ':00';
-	displayTimer.textContent = ((session < 0) ? '0' + session : session) + ':00';
+	displayTimes()
 	});
 });
