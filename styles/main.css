@@ -1,45 +1,63 @@
 @font-face {
-  font-family: 'Black Ops One';
+  font-family: 'Wallpoet';
   font-style: normal;
   font-weight: 400;
-  src: local('Black Ops One Regular'), local('BlackOpsOne-Regular'), url(https://fonts.gstatic.com/s/blackopsone/v9/qWcsB6-ypo7xBdr6Xshe96H3aDXbtwkh.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-@font-face {
-  font-family: 'Black Ops One';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Black Ops One Regular'), local('BlackOpsOne-Regular'), url(https://fonts.gstatic.com/s/blackopsone/v9/qWcsB6-ypo7xBdr6Xshe96H3aDvbtw.woff2) format('woff2');
+  src: local('Wallpoet'), url(http://fonts.gstatic.com/s/wallpoet/v9/f0X10em2_8RnXVVdUObp58Q.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+html {
+  height: 100%;
+  width: 100%;
+  color: #55a879;
+  background: linear-gradient(#051e19,#05663f);
+  background-repeat: no-repeat;
+  /*  #093028
+#237a57 */
+}
+
 body, button {
-  font-family: 'Black Ops One';
+  font-family: 'Wallpoet';
 }
+
 button, span {
-  font-size: 1.2rem;
+  font-size: 1.3rem; 
 }
+
+button {
+  color: #55a879;
+  background: #054d32;
+  border: 1px solid #55a879;
+  border-radius: 5px;
+}
+
 button:hover {
   cursor: pointer;
+  color: #054d32;
+  background: #55a879;
+  box-shadow: 3px 3px 5px #04202C;
 }
 
-h1, h1 span {
-  
+h2 {
+  font-size: 1rem;
+}
+#container {
+  text-align: center;
+  width: 800px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#header {
+  padding: 20px 10px;
+  color: #55a879;
+}
+
+#header h1, #headlights {
   font-size: 4rem;
   text-transform: uppercase;
-}
-
-
-p {
-  font-size: 1.5rem;
-}
-
-#container {
-  border: 1px solid black;
-  text-align: center;
-  width: 500px;
-  margin: 0 auto;
 }
 
 .timer-setup {
@@ -47,5 +65,5 @@ p {
 }
 
 #display-time {
-  font-size: 3rem;
+  font-size: 4rem;
 }

@@ -1,5 +1,5 @@
-let session = 25;
-let breakSession = 5;
+let session = 0.2;
+let breakSession = 0.05;
 let timeNow;
 let timerTime;
 let intervalCount = 0;
@@ -8,8 +8,6 @@ let timeLeft;
 //flags
 let startFlag = false;
 let pauseFlag = false;
-
-
 // functions
 function setTime(input){
 	timeNow = Date.parse(new Date());
@@ -33,16 +31,23 @@ function timer(element, inputTime){
 		element.textContent = ((format.minutes < 10)? '0' + format.minutes : format.minutes) +
 			':' + ((format.seconds < 10)? '0' + format.seconds : format.seconds);
 		if(formatTime(inputTime).time <= 0){
+			sound.play();
 			clearInterval(interval);
 			intervalCount += 1;
-			if(intervalCount < 4){
+			if(intervalCount < 7){
 				if(intervalCount % 2 !== 0){
 					setTime(breakSession);
 					timer(displayTimer, timerTime);
+					headlights.textContent = 'break';
 				}else{
+					sound.play();
 					setTime(session);
 					timer(displayTimer, timerTime);
+					headlights.textContent = 'learning';
 				}
+			}
+			if(intervalCount == 7){
+				alert('done');
 			}
 		}
 	}, 1000);
@@ -64,6 +69,7 @@ function stopAndClear(){
 	intervalCount = 0;
 	startFlag = false;
 	displayTimes()
+	headlights.textContent = 'pomodoro';
 }
 
 function resumeTimer(){
@@ -77,6 +83,8 @@ function resumeTimer(){
 let pomodoroTime = document.getElementById('pomodoro-time');
 let breakTime = document.getElementById('break-time');
 let displayTimer = document.getElementById('display-time');
+let headlights = document.getElementById('headlights');
+let sound = document.getElementById('sound-efect');
 displayTimes()
 // Select Button Nodes
 let startBtn = document.getElementById('start-control');
@@ -89,6 +97,7 @@ startBtn.addEventListener('click', () => {
 	if(!startFlag){
 		startFlag = true;
 		setAndStrat(session);
+		headlights.textContent = 'learning';
 	}else{
 		resumeTimer();
 	}
