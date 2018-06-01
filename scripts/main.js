@@ -4,6 +4,10 @@ let timeNow;
 let timerTime;
 let intervalCount = 0;
 let interval;
+let timeLeft;
+//flags
+let startFlag = false;
+let pauseFlag = false;
 
 
 // functions
@@ -58,7 +62,16 @@ function displayTimes(){
 function stopAndClear(){
 	clearInterval(interval)
 	intervalCount = 0;
+	startFlag = false;
 	displayTimes()
+}
+
+function resumeTimer(){
+	if(pauseFlag){
+		pauseFlag = false;
+		timerTime = new Date(Date.parse(new Date()) + timeLeft);
+		timer(displayTimer, timerTime);
+	}
 }
 // Select Nodes
 let pomodoroTime = document.getElementById('pomodoro-time');
@@ -73,11 +86,20 @@ let resetBtn = document.getElementById('reset-control');;
 let changeMinuteBtns = document.querySelectorAll('.change-minute');
 // Fire up buttons
 startBtn.addEventListener('click', () => {
-	setAndStrat(session);
+	if(!startFlag){
+		startFlag = true;
+		setAndStrat(session);
+	}else{
+		resumeTimer();
+	}
 });
 
 pauseBtn.addEventListener('click', () => {
-	alert('Hello!')
+	if(!pauseFlag){
+		pauseFlag = true;
+		clearInterval(interval);
+		timeLeft = formatTime(timerTime).time;
+	}
 });
 
 stopBtn.addEventListener('click', () => {
