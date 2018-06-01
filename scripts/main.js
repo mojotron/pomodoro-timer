@@ -57,7 +57,7 @@ function timer(element, inputTime){
 				}
 			}
 			if(intervalCount == 7){
-				msg.textContent = 'Well done! You did 4 pomodoro sessions, take longer break. Go autside and take frash air!!!';
+				msg.textContent = 'Well done! You did 4 pomodoro sessions, take a longer break. Go outside and refresh your mind!!!';
 			}
 		}
 	}, 1000);
@@ -78,6 +78,7 @@ function stopAndClear(){
 	clearInterval(interval)
 	intervalCount = 0;
 	startFlag = false;
+	pauseFlag = false;
 	displayTimes()
 	displayTimer.style.color = '#55a879';
 	headlights.textContent = 'pomodoro';
@@ -110,6 +111,7 @@ let changeMinuteBtns = document.querySelectorAll('.change-minute');
 startBtn.addEventListener('click', () => {
 	if(!startFlag){
 		startFlag = true;
+		pauseFlag = false;
 		setAndStrat(session);
 		headlights.textContent = 'learning';
 	}else{
