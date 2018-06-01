@@ -7,17 +7,16 @@
 }
 
 html {
+  font-family: 'Wallpoet';
   height: 100%;
   width: 100%;
   color: #55a879;
   background: linear-gradient(#051e19,#05663f);
   background-repeat: no-repeat;
-  /*  #093028
-#237a57 */
 }
 
-body, button {
-  font-family: 'Wallpoet';
+h2 {
+  font-size: 1rem;
 }
 
 button, span {
@@ -25,6 +24,7 @@ button, span {
 }
 
 button {
+  font-family: 'Wallpoet';
   color: #55a879;
   background: #054d32;
   border: 1px solid #55a879;
@@ -38,9 +38,6 @@ button:hover {
   box-shadow: 3px 3px 5px #04202C;
 }
 
-h2 {
-  font-size: 1rem;
-}
 #container {
   text-align: center;
   width: 800px;
@@ -65,5 +62,18 @@ h2 {
 }
 
 #display-time {
-  font-size: 4rem;
+  font-size: 4.1rem;
+}
+
+#message {
+  padding-top: 30px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+#tomato-img {
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

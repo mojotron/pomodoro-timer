@@ -1,5 +1,5 @@
-let session = 0.2;
-let breakSession = 0.05;
+let session = 25;
+let breakSession = 5;
 let timeNow;
 let timerTime;
 let intervalCount = 0;
@@ -26,10 +26,20 @@ function formatTime(inputTime){
 }
 
 function timer(element, inputTime){
+	element.style.color = '#55a879';
 	interval = setInterval(function(){
 		let format = formatTime(inputTime);
 		element.textContent = ((format.minutes < 10)? '0' + format.minutes : format.minutes) +
 			':' + ((format.seconds < 10)? '0' + format.seconds : format.seconds);
+
+		if(format.seconds < 16){
+			element.style.color = '#c4b01b';
+		}
+
+		if(format.seconds < 6){
+			element.style.color = '#ed213b';
+		}
+
 		if(formatTime(inputTime).time <= 0){
 			sound.play();
 			clearInterval(interval);
@@ -47,7 +57,7 @@ function timer(element, inputTime){
 				}
 			}
 			if(intervalCount == 7){
-				alert('done');
+				msg.textContent = 'Well done! You did 4 pomodoro sessions, take longer break. Go autside and take frash air!!!';
 			}
 		}
 	}, 1000);
@@ -59,9 +69,9 @@ function setAndStrat(session){
 }
 
 function displayTimes(){
-	pomodoroTime.textContent = ((session < 0) ? '0' + session : session) + ':00';
-	breakTime.textContent = ((breakSession < 0) ? '0' + breakSession : breakSession) + ':00';
-	displayTimer.textContent = ((session < 0) ? '0' + session : session) + ':00';
+	pomodoroTime.textContent = ((session < 10) ? '0' + session : session) + ':00';
+	breakTime.textContent = ((breakSession < 10) ? '0' + breakSession : breakSession) + ':00';
+	displayTimer.textContent = ((session < 10) ? '0' + session : session) + ':00';
 }
 
 function stopAndClear(){
@@ -69,7 +79,10 @@ function stopAndClear(){
 	intervalCount = 0;
 	startFlag = false;
 	displayTimes()
+	displayTimer.style.color = '#55a879';
 	headlights.textContent = 'pomodoro';
+	msg.textContent = '';
+
 }
 
 function resumeTimer(){
@@ -85,6 +98,7 @@ let breakTime = document.getElementById('break-time');
 let displayTimer = document.getElementById('display-time');
 let headlights = document.getElementById('headlights');
 let sound = document.getElementById('sound-efect');
+let msg = document.getElementById('message');
 displayTimes()
 // Select Button Nodes
 let startBtn = document.getElementById('start-control');
