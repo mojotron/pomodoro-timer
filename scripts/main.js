@@ -32,11 +32,11 @@ function timer(element, inputTime){
 		element.textContent = ((format.minutes < 10)? '0' + format.minutes : format.minutes) +
 			':' + ((format.seconds < 10)? '0' + format.seconds : format.seconds);
 
-		if(format.seconds < 16){
+		if(format.seconds < 16 && format.minutes === 0){
 			element.style.color = '#c4b01b';
 		}
 
-		if(format.seconds < 6){
+		if(format.seconds < 6 && format.minutes === 0){
 			element.style.color = '#ed213b';
 		}
 
